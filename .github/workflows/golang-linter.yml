@@ -16,7 +16,7 @@ on:
   pull_request:
     branches: [main]
 env:
-WORKING_DIR: ./app
+  WORKING_DIR: ./app
 
 ###############
 # Set the Job #
