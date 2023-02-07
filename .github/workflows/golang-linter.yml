@@ -56,7 +56,7 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base - Golangci
-        uses: github/golangci-lint-action@v3.4.0
+        uses: golangci/golangci-lint-action@v3
         with:
           working-directory: ${{env.WORKING_DIR}}
           args: "--config .github/linters/golangci.yml"
