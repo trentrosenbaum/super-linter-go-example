@@ -59,4 +59,4 @@ jobs:
         uses: github/golangci-lint-action@v3.4.0
         with:
           working-directory: ${{env.WORKING_DIR}}
-          args: ["--config",".github/linters/golangci.yml"]
+          args: ["--config .github/linters/golangci.yml"
