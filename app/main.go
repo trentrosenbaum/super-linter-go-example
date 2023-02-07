@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/trentrosenbaum/super-linter-go-example/pkg/message"
+)
 
 func main() {
 
-	fmt.Println("Hello Golang World!!!")
+	fmt.Println(message.GetGreeting("Golang"))
 
 }
