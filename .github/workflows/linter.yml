@@ -52,6 +52,8 @@ jobs:
       ################################
       - name: Lint Code Base
         uses: github/super-linter@v4
+        with:
+          working-directory: ./app
         env:
           LINTER_RULES_PATH: ".github/linters"
           VALIDATE_ALL_CODEBASE: false
