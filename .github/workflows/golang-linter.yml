@@ -1,10 +1,10 @@
 ---
 #################################
 #################################
-## Super Linter GitHub Actions ##
+## Golangci-lint GitHub Actions #
 #################################
 #################################
-name: Lint Code Base
+name: Lint Code Base - Golang
 
 #############################
 # Start the job on all push #
@@ -15,12 +15,14 @@ on:
     # Remove the line above to run when pushing to master
   pull_request:
     branches: [main]
+env:
+  WORKING_DIR: ./app
 
 ###############
 # Set the Job #
 ###############
 jobs:
-  build:
+  lint:
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
@@ -30,22 +32,31 @@ jobs:
     # Load all steps #
     ##################
     steps:
+      ###########################
+      # Install required golang #
+      ###########################
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
       ##########################
       # Checkout the code base #
       ##########################
-      - name: Checkout Code
+      - name: Checkout code base
         uses: actions/checkout@v3
         with:
-          # Full git history is needed to get a proper
-          # list of changed files within `super-linter`
+          persist-credentials: false
           fetch-depth: 0
-
+      #############################
+      # setup private repo access #
+      #############################
+      - name: Configure private repo access
+        run: git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf http://github.com/
       ################################
       # Run Linter against code base #
       ################################
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint Code Base - Golangci
+        uses: golangci/golangci-lint-action@v3
+        with:
+          working-directory: ${{env.WORKING_DIR}}
+          args: "--config .golangci.yml"
